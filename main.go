@@ -6,6 +6,7 @@ import (
 	"io"
 	"os"
 	"os/exec"
+	"runtime"
 	"time"
 
 	"github.com/eiannone/keyboard"
@@ -81,7 +82,7 @@ func main() {
 
 	//The main loop
 	for {
-		exec.Command("cls")
+		ClearTerminal()
 		Map.printMap()
 		_, key, err := keyboard.GetKey()
 		if err != nil {
@@ -132,4 +133,23 @@ func InitPlayer(symbol byte, x_coord, y_coord int) (Player _player) {
 	Player.standing_on = '.'
 
 	return Player
+}
+
+func runCmd(name string, arg ...string) {
+	cmd := exec.Command(name, arg...)
+	cmd.Stdout = os.Stdout
+	cmd.Run()
+}
+
+func ClearTerminal() {
+	switch runtime.GOOS {
+	case "darwin":
+		runCmd("clear")
+	case "linux":
+		runCmd("clear")
+	case "windows":
+		runCmd("cmd", "/c", "cls")
+	default:
+		runCmd("clear")
+	}
 }
