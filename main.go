@@ -13,8 +13,6 @@ import (
 
 type _map struct {
 	field [][]byte
-	rows  int
-	cols  int
 }
 
 func (Map _map) printMap() {
@@ -71,7 +69,7 @@ func (Player *_player) move(Map *_map, key keyboard.Key) {
 }
 
 func main() {
-	var Map _map = ReadMap("map.txt")
+	var Map _map = ReadMap("Maps/map.txt")
 	var Player _player = InitPlayer(byte('@'), 1, 1)
 	Map.setPlayerOnMap(&Player)
 
@@ -112,7 +110,6 @@ func ReadMap(path string) (Map _map) {
 
 	var reader bufio.Reader = *bufio.NewReader(file)
 
-	var index_line = 0
 	for {
 		line, _, err := reader.ReadLine()
 		if err != nil {
@@ -124,10 +121,7 @@ func ReadMap(path string) (Map _map) {
 			}
 		}
 		Map.field = append(Map.field, []byte(line))
-		index_line += 1
-		Map.cols = max(Map.cols, len(line))
 	}
-	Map.rows = index_line
 	return Map
 }
 
