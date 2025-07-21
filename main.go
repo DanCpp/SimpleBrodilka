@@ -46,19 +46,19 @@ func (Player *_player) move(Map *_map, key keyboard.Key) {
 
 	switch key {
 	case keyboard.KeyArrowUp:
-		if Map.field[*x][*y-1] != byte('#') {
+		if Map.field[*y-1][*x] != byte('#') {
 			*y -= 1
 		}
 	case keyboard.KeyArrowDown:
-		if Map.field[*x][*y+1] != byte('#') {
+		if Map.field[*y+1][*x] != byte('#') {
 			*y += 1
 		}
 	case keyboard.KeyArrowLeft:
-		if Map.field[*x-1][*y] != byte('#') {
+		if Map.field[*y][*x-1] != byte('#') {
 			*x -= 1
 		}
 	case keyboard.KeyArrowRight:
-		if Map.field[*x+1][*y] != byte('#') {
+		if Map.field[*y][*x+1] != byte('#') {
 			*x += 1
 		}
 	default:
@@ -70,7 +70,7 @@ func (Player *_player) move(Map *_map, key keyboard.Key) {
 }
 
 func main() {
-	var Map _map = ReadMap("Maps/map.txt")
+	var Map _map = ReadMap("Maps/mapTest.txt")
 	var Player _player = InitPlayer(byte('@'), 1, 1)
 	Map.setPlayerOnMap(&Player)
 
